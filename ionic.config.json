@@ -1,0 +1,7 @@
+{
+  "name": "react-hand-calc",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
