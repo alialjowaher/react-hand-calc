@@ -47,15 +47,16 @@ const Tab2: React.FC = () => {
               </IonCard>
               <IonListHeader>
               <IonLabel className="ion-text-center">معلومات الجولات </IonLabel>
+              
             </IonListHeader>
-              <IonList dir="rtl">
-            <IonItem>
-              <IonLabel>Pokémon Yellow</IonLabel>
+              <IonList>
+            <IonItem detail>
+              <IonLabel> الجولة 1 - خلوص صافي - لنـا</IonLabel>
             </IonItem>
-            <IonItem>
-              <IonLabel>Mega Man X</IonLabel>
+            <IonItem detail>
+              <IonLabel>الجولة  - دبــل - لهـم</IonLabel>
             </IonItem>
-            <IonItem>
+            <IonItem detail>
               <IonLabel>The Legend of Zelda</IonLabel>
             </IonItem>
             <IonItem>
