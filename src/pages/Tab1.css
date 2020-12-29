@@ -1,0 +1,51 @@
+.lana {
+    border-radius: 20px;
+    margin: 0px;
+}
+
+.lahom {
+    border-radius: 20px;
+    margin: 0px;
+}
+
+.farq {
+    border-radius: 20px;
+    height: 12em;
+   
+}
+.farqValue{
+    color: #eb445a;
+}
+.currentRound {
+    border-radius: 20px;
+    
+}
+
+.tasjilah,
+.dabal,
+.khlos {
+    border-radius: 20px;
+    margin: 0px;
+}
+
+.tasjilah {
+    border-top: 5px solid #eb445a
+}
+
+.dabal {
+    border-top: 5px solid #2dd36f
+}
+
+.khlos {
+    border-top: 5px solid #3880ff
+}
+
+body {
+    background-color: lightgray;
+}
+h2.remove-whitespace {
+    margin: 0;
+    padding: 0;
+    line-height: 30px;
+    height: 25px;
+  }

@@ -1,26 +1,96 @@
-import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Tab1.css';
+import React, { useState } from 'react';
+import { IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonModal, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import './Tab2.css';
+import RadialChart from '../components/RadialChart';
+import { add, reload } from 'ionicons/icons';
+import { AddJawlah } from '../components/AddJawlah';
 
-const Tab1: React.FC = () => {
+const Tab2: React.FC = () => {
+  const [showModal, setShowModal] = useState(false);
+
+
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader dir="rtl" className="ion-no-border">
         <IonToolbar>
-          <IonTitle>Dashboard</IonTitle>
+          <IonButtons slot="end" ><IonButton><IonIcon color="dark" icon={reload} /></IonButton></IonButtons>
+
+          <IonTitle className="ion-text-center"> حاسبة الهـاند</IonTitle>
+
+          <IonButtons slot="start"><IonButton onClick={() => setShowModal(true)}><IonIcon color="dark" icon={add} />  </IonButton></IonButtons>
+          <IonModal isOpen={showModal}>
+
+            <IonButton onClick={() => setShowModal(false)}>
+              Close Modal
+        </IonButton>
+            <AddJawlah></AddJawlah>
+          </IonModal>
+
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Dashboard</IonTitle>
-          </IonToolbar>
+        <IonHeader >
         </IonHeader>
-        <ExploreContainer name="Tab 1 page" />
+
+        <IonGrid>
+          <IonRow className="ion-text-center">
+            <IonCol>
+              <IonCard className="lana">
+                <IonCol className="ion-align-self-center" ><h2 className="remove-whitespace">لنـا</h2></IonCol>
+                <IonCol><h2 className="remove-whitespace">30 -</h2></IonCol>
+              </IonCard>
+            </IonCol>
+            <IonCol>
+              <IonCard className="lahom">
+                <IonCol className="ion-align-self-center lahom"><h2 className="remove-whitespace">لهـم</h2></IonCol>
+                <IonCol><h2 className="remove-whitespace">300</h2></IonCol>
+              </IonCard>
+            </IonCol>
+          </IonRow>
+
+          <IonRow className="ion-text-center">
+            <IonCol>
+              <IonCard className="currentRound">
+                <IonCol className="ion-align-self-center"><h2 className="remove-whitespace">الجولة الحالية</h2></IonCol>
+                <IonCol> <RadialChart
+                  progress={1}
+                  color="#3c71d0"
+                /></IonCol>
+              </IonCard>
+            </IonCol>
+            <IonCol>
+              <IonCard className="farq">
+                <IonCol className="ion-align-self-center"><h2 className="remove-whitespace">الفرق</h2></IonCol>
+                <IonCol><h2 className="farqValue">1270</h2></IonCol>
+              </IonCard>
+            </IonCol>
+
+          </IonRow>
+          <IonRow className="ion-text-center">
+            <IonCol className="ion-text-center">
+              <IonCard className="khlos" color=''>
+                <IonCol className="ion-align-self-center"><h2> الخلوص </h2></IonCol>
+                <IonCol><h2 className="remove-whitespace">1</h2></IonCol>
+              </IonCard>
+            </IonCol>
+            <IonCol>
+              <IonCard className="dabal" color=''>
+                <IonCol className="ion-align-self-center"><h2>الدبل</h2></IonCol>
+                <IonCol><h2 className="remove-whitespace">0</h2></IonCol>
+              </IonCard>
+            </IonCol>
+            <IonCol>
+              <IonCard className="tasjilah">
+                <IonCol className="ion-align-self-center"><h2> التسجيلة</h2></IonCol>
+                <IonCol><h2 className="remove-whitespace">0</h2></IonCol>
+
+              </IonCard>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
       </IonContent>
-    </IonPage>
+    </IonPage >
   );
 };
 
-export default Tab1;
+export default Tab2;
