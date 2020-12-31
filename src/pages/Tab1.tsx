@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonModal, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import './Tab2.css';
 import RadialChart from '../components/RadialChart';
-import { add, reload } from 'ionicons/icons';
+import { add, reload, close } from 'ionicons/icons';
 import { AddJawlah } from '../components/AddJawlah';
 
 const Tab2: React.FC = () => {
@@ -14,18 +14,18 @@ const Tab2: React.FC = () => {
       <IonHeader dir="rtl" className="ion-no-border">
         <IonToolbar>
           <IonButtons slot="end" ><IonButton><IonIcon color="dark" icon={reload} /></IonButton></IonButtons>
-
           <IonTitle className="ion-text-center"> حاسبة الهـاند</IonTitle>
-
           <IonButtons slot="start"><IonButton onClick={() => setShowModal(true)}><IonIcon color="dark" icon={add} />  </IonButton></IonButtons>
+           <IonToolbar> 
           <IonModal isOpen={showModal}>
-
-            <IonButton onClick={() => setShowModal(false)}>
-              Close Modal
+            <IonButtons slot="end">
+            <IonButton color="danger" onClick={() => setShowModal(false)}>
+            <IonIcon color="" icon={close} /> 
         </IonButton>
+        </IonButtons>
             <AddJawlah></AddJawlah>
           </IonModal>
-
+          </IonToolbar>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
