@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { IonCol, IonContent, IonGrid, IonItem, IonItemDivider, IonLabel, IonListHeader, IonRadio, IonRadioGroup, IonRow, IonSegment, IonSegmentButton } from '@ionic/react';
-
+import { IonButton, IonCol, IonContent, IonGrid, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonRadio, IonRadioGroup, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption } from '@ionic/react';
+import "./AddJawlah.css"
 
 export const AddJawlah: React.FC = () => {
     const [winTeam, setwinTeam] = useState<string>('');
     const [generalWinType, setgeneralWinType] = useState<string>('')
     const [finalWinType, setfinalWinType] = useState<string>('')
-    
-
+    const [nazilCount, setNazilCount] = useState<number>()
+    const [nazilTotal, setNazilTotal] = useState<number>()
     function switchWin() {
     switch(generalWinType){
         
@@ -23,11 +23,8 @@ export const AddJawlah: React.FC = () => {
             </IonSegmentButton>
             </IonSegment>
            )
-         
-            
         }
         case "dabal":{
-            
             return(
                 <IonSegment  onIonChange={(e) => setfinalWinType(`${e.detail.value}`)}>
                 <IonSegmentButton  value="dabalSafi">
@@ -49,16 +46,46 @@ export const AddJawlah: React.FC = () => {
                   <IonLabel>دبل</IonLabel>
                 </IonSegmentButton>
                 </IonSegment>
-                
-              
             )
         }
         
     }
     }
+
+    function nazilandTotal() {
+      switch(finalWinType) {
+        case "khlos":
+        case "dabal": {
+          return(
+            <IonList>
+            <IonItem>
+            <IonLabel>عدد النازليـن</IonLabel>
+            <IonSelect value={nazilCount}  okText="حسناً" cancelText="إلغاء" placeholder="اختر" onIonChange={e => setNazilCount(e.detail.value)}>
+              <IonSelectOption value="1">1</IonSelectOption>
+              <IonSelectOption value="2">2</IonSelectOption>
+              <IonSelectOption value="3">3</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+          <IonItem>
+            <IonInput type="number" value={nazilTotal} placeholder="ادخل المجموع" onIonChange={e => setNazilTotal(parseInt(e.detail.value!, 10))}></IonInput>
+          </IonItem>
+          </IonList>
+          )
+        }
+       case "khlosSafi":
+       case "dabalSafi":
+       case "tasjilahKhlos":
+       case "tasjilahdabal": {
+        //  setfinalWinType('')
+         break
+       }
+       
+      }
+     
+    }
    
     return (
-        <IonContent>
+        <IonContent className="addjawalhview">
         <IonGrid>
         <IonRow>
         <IonCol>
@@ -75,11 +102,12 @@ export const AddJawlah: React.FC = () => {
               <IonRadio slot="start" value="lahom" />
             </IonItem>
           </IonRadioGroup>
-          <IonItemDivider>Your Selection</IonItemDivider>
-          <IonItem>{winTeam}</IonItem>
+          {/* <IonItemDivider>Your Selection</IonItemDivider>
+          <IonItem>{winTeam}</IonItem> */}
         </IonCol>
+
          </IonRow>
-         <IonRow>
+         <IonRow style={{margin:'10px'}}>
          <IonSegment  id="winStatus" onIonChange={(e) => setgeneralWinType(`${e.detail.value}`)}>
           <IonSegmentButton value="khlos">
             <IonLabel>خلوص</IonLabel>
@@ -91,18 +119,22 @@ export const AddJawlah: React.FC = () => {
             <IonLabel>تسجيل</IonLabel>
           </IonSegmentButton>
         </IonSegment>
-         <IonItem>{generalWinType}</IonItem>
+         {/* <IonItem>{generalWinType}</IonItem> */}
          </IonRow>
-         <IonRow>
+         <IonRow style={{margin:'10px'}}>
 
          {switchWin()}
-    
-        
-
-         
-           
-         
-         <IonItem>{finalWinType}</IonItem>
+          
+        {nazilandTotal()}
+         {/* <IonItem>{finalWinType}</IonItem> */}
+         </IonRow>
+         <IonRow>
+           <IonCol></IonCol>
+           <IonCol className="ion-align-self-center" size="10">
+           <IonButton shape="round" size="large" expand="block">إضافـة جولـة</IonButton>
+           </IonCol>
+           <IonCol></IonCol>
+          
          </IonRow>
         </IonGrid>
         </IonContent>

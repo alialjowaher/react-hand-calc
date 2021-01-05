@@ -16,22 +16,18 @@ const Tab2: React.FC = () => {
           <IonButtons slot="end" ><IonButton><IonIcon color="dark" icon={reload} /></IonButton></IonButtons>
           <IonTitle className="ion-text-center"> حاسبة الهـاند</IonTitle>
           <IonButtons slot="start"><IonButton onClick={() => setShowModal(true)}><IonIcon color="dark" icon={add} />  </IonButton></IonButtons>
-           <IonToolbar> 
+          
           <IonModal isOpen={showModal}>
             <IonButtons slot="end">
-            <IonButton color="danger" onClick={() => setShowModal(false)}>
-            <IonIcon color="" icon={close} /> 
+            <IonButton color="medium" onClick={() => setShowModal(false)}>
+            <IonIcon icon={close} /> 
         </IonButton>
         </IonButtons>
             <AddJawlah></AddJawlah>
           </IonModal>
-          </IonToolbar>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader >
-        </IonHeader>
-
         <IonGrid>
           <IonRow className="ion-text-center">
             <IonCol>
