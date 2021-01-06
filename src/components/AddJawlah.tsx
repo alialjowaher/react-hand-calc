@@ -67,7 +67,8 @@ export const AddJawlah: React.FC = () => {
             </IonSelect>
           </IonItem>
           <IonItem>
-            <IonInput type="number" value={nazilTotal} placeholder="ادخل المجموع" onIonChange={e => setNazilTotal(parseInt(e.detail.value!, 10))}></IonInput>
+            {/* use pattern="[0-9]*"  to show only numbers keypad*/}
+            <IonInput type="number" value={nazilTotal} pattern="[0-9]*" placeholder="ادخل المجموع" onIonChange={e => setNazilTotal(parseInt(e.detail.value!, 10))}></IonInput>
           </IonItem>
           </IonList>
           )
