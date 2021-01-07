@@ -73,17 +73,32 @@ export const AddJawlah: React.FC = () => {
           </IonList>
           )
         }
-       case "khlosSafi":
-       case "dabalSafi":
-       case "tasjilahKhlos":
-       case "tasjilahdabal": {
-        //  setfinalWinType('')
-         break
-       }
+      //  case "khlosSafi":
+      //  case "dabalSafi":
+      //  case "tasjilahKhlos":
+      //  case "tasjilahdabal": {
+      //   //  setfinalWinType('')
+      //    break
+      //  }
        
       }
      
     }
+    
+    const winValues = [
+      {'jawalhNo':0,'winType':'khlos','winnerTeam':'','losserTeam':'','winnerValue':-30,'losserValue':0,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
+      {'jawalhNo':0,'winType':'khlosSafi','winnerTeam':'','losserTeam':'','winnerValue':-30,'losserValue':300,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
+      {'jawalhNo':0,'winType':'dabal','winnerTeam':'','losserTeam':'','winnerValue':-60,'losserValue':0,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
+      {'jawalhNo':0,'winType':'dabalSafi','winnerTeam':'','losserTeam':'','winnerValue':-60,'losserValue':600,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
+      {'jawalhNo':0,'winType':'tasjilahKhlos','winnerTeam':'','losserTeam':'','winnerValue':0,'losserValue':0,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
+      {'jawalhNo':0,'winType':'tasjilahdabal','winnerTeam':'','losserTeam':'','winnerValue':0,'losserValue':0,'nazilCount':0,'nazilTotal':0,'isTasjilah':false}
+    ]
+    
+    function addValues(){
+    const jawalhInfo = winValues.filter(value => value.winType === finalWinType);
+    jawalhInfo[0].winnerTeam = winTeam
+    }
+  
    
     return (
         <IonContent className="addjawalhview">
@@ -132,7 +147,7 @@ export const AddJawlah: React.FC = () => {
          <IonRow>
            <IonCol></IonCol>
            <IonCol className="ion-align-self-center" size="10">
-           <IonButton shape="round" size="large" expand="block">إضافـة جولـة</IonButton>
+           <IonButton shape="round" size="large" onClick={addValues} expand="block">إضافـة جولـة</IonButton>
            </IonCol>
            <IonCol></IonCol>
           
