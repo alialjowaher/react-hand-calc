@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { IonButton, IonCol, IonContent, IonGrid, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonRadio, IonRadioGroup, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption } from '@ionic/react';
 import "./AddJawlah.css"
+import { type } from 'os';
 
 export const AddJawlah: React.FC = () => {
     const [winTeam, setwinTeam] = useState<string>('');
     const [generalWinType, setgeneralWinType] = useState<string>('')
     const [finalWinType, setfinalWinType] = useState<string>('')
-    const [nazilCount, setNazilCount] = useState<number>()
-    const [nazilTotal, setNazilTotal] = useState<number>()
+    const [nazilCount, setNazilCount] = useState<number>(0)
+    const [nazilTotal, setNazilTotal] = useState<number>(0)
     function switchWin() {
     switch(generalWinType){
         
@@ -60,7 +61,7 @@ export const AddJawlah: React.FC = () => {
             <IonList>
             <IonItem>
             <IonLabel>عدد النازليـن</IonLabel>
-            <IonSelect value={nazilCount}  okText="حسناً" cancelText="إلغاء" placeholder="اختر" onIonChange={e => setNazilCount(e.detail.value)}>
+            <IonSelect value={nazilCount}  okText="حسناً" cancelText="إلغاء" placeholder="اختر" onIonChange={e => setNazilCount(Number(e.detail.value))}>
               <IonSelectOption value="1">1</IonSelectOption>
               <IonSelectOption value="2">2</IonSelectOption>
               <IonSelectOption value="3">3</IonSelectOption>
@@ -68,19 +69,12 @@ export const AddJawlah: React.FC = () => {
           </IonItem>
           <IonItem>
             {/* use pattern="[0-9]*"  to show only numbers keypad*/}
-            <IonInput type="number" value={nazilTotal} pattern="[0-9]*" placeholder="ادخل المجموع" onIonChange={e => setNazilTotal(parseInt(e.detail.value!, 10))}></IonInput>
+            <IonInput type="number" value={nazilTotal} pattern="[0-9]*" placeholder="ادخل المجموع" onIonChange={e => setNazilTotal(Number(e.detail.value))}></IonInput>
           </IonItem>
           </IonList>
           )
         }
-      //  case "khlosSafi":
-      //  case "dabalSafi":
-      //  case "tasjilahKhlos":
-      //  case "tasjilahdabal": {
-      //   //  setfinalWinType('')
-      //    break
-      //  }
-       
+   
       }
      
     }
@@ -90,14 +84,49 @@ export const AddJawlah: React.FC = () => {
       {'jawalhNo':0,'winType':'khlosSafi','winnerTeam':'','losserTeam':'','winnerValue':-30,'losserValue':300,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
       {'jawalhNo':0,'winType':'dabal','winnerTeam':'','losserTeam':'','winnerValue':-60,'losserValue':0,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
       {'jawalhNo':0,'winType':'dabalSafi','winnerTeam':'','losserTeam':'','winnerValue':-60,'losserValue':600,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
-      {'jawalhNo':0,'winType':'tasjilahKhlos','winnerTeam':'','losserTeam':'','winnerValue':0,'losserValue':0,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
-      {'jawalhNo':0,'winType':'tasjilahdabal','winnerTeam':'','losserTeam':'','winnerValue':0,'losserValue':0,'nazilCount':0,'nazilTotal':0,'isTasjilah':false}
+      {'jawalhNo':0,'winType':'tasjilahKhlos','winnerTeam':'','losserTeam':'','winnerValue':0,'losserValue':300,'nazilCount':0,'nazilTotal':0,'isTasjilah':true},
+      {'jawalhNo':0,'winType':'tasjilahdabal','winnerTeam':'','losserTeam':'','winnerValue':0,'losserValue':600,'nazilCount':0,'nazilTotal':0,'isTasjilah':true}
     ]
     
-    function addValues(){
-    const jawalhInfo = winValues.filter(value => value.winType === finalWinType);
-    jawalhInfo[0].winnerTeam = winTeam
-    }
+    
+    
+    const NazilValues = [
+      {'nazil':1,'subTotal':200},
+      {'nazil':2,'subTotal':100},
+      {'nazil':3,'subTotal':0}
+    ]
+    
+    
+    function totalCalc(){
+      const getNazil = NazilValues.filter(v => v.nazil === nazilCount);
+      let losserVal;
+      switch (finalWinType) {
+        case 'khlos':
+          losserVal  = (getNazil[0].subTotal + nazilTotal)
+           break;
+           case 'dabal':
+             losserVal  = ((getNazil[0].subTotal + nazilTotal) * 2)
+             break;
+            } 
+            
+            return Number(losserVal) 
+          }
+          
+          function setWinValues(){
+            const jawalhInfo = winValues.filter(value => value.winType === finalWinType);
+            jawalhInfo[0].winnerTeam = (winTeam === 'lana')? 'lana':'lahom';
+            jawalhInfo[0].losserTeam = (winTeam === 'lana')? 'lahom':'lana';
+            jawalhInfo[0].nazilCount = nazilCount
+            jawalhInfo[0].nazilTotal = nazilTotal
+            if( nazilCount !== 0){
+              let finalVal = totalCalc()
+              jawalhInfo[0].losserValue = finalVal              
+            }
+    
+            console.log(jawalhInfo)
+    
+  }
+
   
    
     return (
@@ -147,7 +176,7 @@ export const AddJawlah: React.FC = () => {
          <IonRow>
            <IonCol></IonCol>
            <IonCol className="ion-align-self-center" size="10">
-           <IonButton shape="round" size="large" onClick={addValues} expand="block">إضافـة جولـة</IonButton>
+           <IonButton shape="round" size="large" onClick={setWinValues} expand="block">إضافـة جولـة</IonButton>
            </IonCol>
            <IonCol></IonCol>
           
