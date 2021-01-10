@@ -33,6 +33,16 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { DBConfig } from './DBConfig';
+import { initDB } from 'react-indexed-db';
+
+initDB(DBConfig);
+
+
+// pass the values from DB to components as props or inside compoents ?
+// build a delete button 
+// hook values to UI elements 
+// figure out jawalah_id or time-stamp for tracking
 
 const App: React.FC = () => (
   <IonApp>

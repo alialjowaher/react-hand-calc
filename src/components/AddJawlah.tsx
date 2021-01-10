@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IonButton, IonCol, IonContent, IonGrid, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonRadio, IonRadioGroup, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption } from '@ionic/react';
 import "./AddJawlah.css"
-import { type } from 'os';
+import { useIndexedDB } from 'react-indexed-db';
 
 export const AddJawlah: React.FC = () => {
     const [winTeam, setwinTeam] = useState<string>('');
@@ -9,8 +9,14 @@ export const AddJawlah: React.FC = () => {
     const [finalWinType, setfinalWinType] = useState<string>('')
     const [nazilCount, setNazilCount] = useState<number>(0)
     const [nazilTotal, setNazilTotal] = useState<number>(0)
+    const { add } = useIndexedDB('jawlat');
+    const [jawlah, setJawlah] = useState();
+
+
+
+
     function switchWin() {
-    switch(generalWinType){
+      switch(generalWinType){
         
         case "khlos":{
             
@@ -80,12 +86,12 @@ export const AddJawlah: React.FC = () => {
     }
     
     const winValues = [
-      {'jawalhNo':0,'winType':'khlos','winnerTeam':'','losserTeam':'','winnerValue':-30,'losserValue':0,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
-      {'jawalhNo':0,'winType':'khlosSafi','winnerTeam':'','losserTeam':'','winnerValue':-30,'losserValue':300,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
-      {'jawalhNo':0,'winType':'dabal','winnerTeam':'','losserTeam':'','winnerValue':-60,'losserValue':0,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
-      {'jawalhNo':0,'winType':'dabalSafi','winnerTeam':'','losserTeam':'','winnerValue':-60,'losserValue':600,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
-      {'jawalhNo':0,'winType':'tasjilahKhlos','winnerTeam':'','losserTeam':'','winnerValue':0,'losserValue':300,'nazilCount':0,'nazilTotal':0,'isTasjilah':true},
-      {'jawalhNo':0,'winType':'tasjilahdabal','winnerTeam':'','losserTeam':'','winnerValue':0,'losserValue':600,'nazilCount':0,'nazilTotal':0,'isTasjilah':true}
+      {'jawlahID':0,'winType':'khlos','winnerTeam':'','losserTeam':'','winnerValue':-30,'losserValue':0,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
+      {'jawlahID':0,'winType':'khlosSafi','winnerTeam':'','losserTeam':'','winnerValue':-30,'losserValue':300,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
+      {'jawlahID':0,'winType':'dabal','winnerTeam':'','losserTeam':'','winnerValue':-60,'losserValue':0,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
+      {'jawlahID':0,'winType':'dabalSafi','winnerTeam':'','losserTeam':'','winnerValue':-60,'losserValue':600,'nazilCount':0,'nazilTotal':0,'isTasjilah':false},
+      {'jawlahID':0,'winType':'tasjilahKhlos','winnerTeam':'','losserTeam':'','winnerValue':0,'losserValue':300,'nazilCount':0,'nazilTotal':0,'isTasjilah':true},
+      {'jawlahID':0,'winType':'tasjilahdabal','winnerTeam':'','losserTeam':'','winnerValue':0,'losserValue':600,'nazilCount':0,'nazilTotal':0,'isTasjilah':true}
     ]
     
     
@@ -112,19 +118,29 @@ export const AddJawlah: React.FC = () => {
             return Number(losserVal) 
           }
           
-          function setWinValues(){
-            const jawalhInfo = winValues.filter(value => value.winType === finalWinType);
-            jawalhInfo[0].winnerTeam = (winTeam === 'lana')? 'lana':'lahom';
-            jawalhInfo[0].losserTeam = (winTeam === 'lana')? 'lahom':'lana';
-            jawalhInfo[0].nazilCount = nazilCount
-            jawalhInfo[0].nazilTotal = nazilTotal
-            if( nazilCount !== 0){
-              let finalVal = totalCalc()
-              jawalhInfo[0].losserValue = finalVal              
-            }
-    
-            console.log(jawalhInfo)
-    
+    function setWinValues(){
+      const jawalhInfo = winValues.filter(value => value.winType === finalWinType);
+        jawalhInfo[0].winnerTeam = (winTeam === 'lana')? 'lana':'lahom';
+        jawalhInfo[0].losserTeam = (winTeam === 'lana')? 'lahom':'lana';
+        jawalhInfo[0].nazilCount = nazilCount
+        jawalhInfo[0].nazilTotal = nazilTotal
+      if(nazilCount !== 0){
+          let finalVal = totalCalc()
+          jawalhInfo[0].losserValue = finalVal              
+        }
+
+        console.log(jawalhInfo)
+
+        add({'jawlahID':0,'winType':jawalhInfo[0].winType,'winnerTeam':jawalhInfo[0].winnerTeam,
+        'losserTeam':jawalhInfo[0].losserTeam,'winnerValue':jawalhInfo[0].winnerValue,'losserValue':jawalhInfo[0].losserValue,
+        'nazilCount':jawalhInfo[0].nazilCount,'nazilTotal':jawalhInfo[0].nazilTotal,'isTasjilah':jawalhInfo[0].isTasjilah
+      }).then(
+        error => {
+          console.log(error)
+        }
+      )
+      
+            
   }
 
   
