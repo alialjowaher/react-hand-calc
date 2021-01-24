@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { IonButton, IonCol, IonContent, IonGrid, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonRadio, IonRadioGroup, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption } from '@ionic/react';
 import "./AddJawlah.css"
-import { useIndexedDB } from 'react-indexed-db';
+
+
 
 export const AddJawlah: React.FC = () => {
     const [winTeam, setwinTeam] = useState<string>('');
@@ -9,9 +10,8 @@ export const AddJawlah: React.FC = () => {
     const [finalWinType, setfinalWinType] = useState<string>('')
     const [nazilCount, setNazilCount] = useState<number>(0)
     const [nazilTotal, setNazilTotal] = useState<number>(0)
-    const { add } = useIndexedDB('jawlat');
+   
     const [jawlah, setJawlah] = useState();
-
 
 
 
@@ -131,14 +131,14 @@ export const AddJawlah: React.FC = () => {
 
         console.log(jawalhInfo)
 
-        add({'jawlahID':0,'winType':jawalhInfo[0].winType,'winnerTeam':jawalhInfo[0].winnerTeam,
-        'losserTeam':jawalhInfo[0].losserTeam,'winnerValue':jawalhInfo[0].winnerValue,'losserValue':jawalhInfo[0].losserValue,
-        'nazilCount':jawalhInfo[0].nazilCount,'nazilTotal':jawalhInfo[0].nazilTotal,'isTasjilah':jawalhInfo[0].isTasjilah
-      }).then(
-        error => {
-          console.log(error)
-        }
-      )
+      //   add({'jawlahID':0,'winType':jawalhInfo[0].winType,'winnerTeam':jawalhInfo[0].winnerTeam,
+      //   'losserTeam':jawalhInfo[0].losserTeam,'winnerValue':jawalhInfo[0].winnerValue,'losserValue':jawalhInfo[0].losserValue,
+      //   'nazilCount':jawalhInfo[0].nazilCount,'nazilTotal':jawalhInfo[0].nazilTotal,'isTasjilah':jawalhInfo[0].isTasjilah
+      // }).then(
+      //   error => {
+      //     console.log(error)
+      //   }
+      // )
       
             
   }

@@ -4,18 +4,13 @@ import './Tab2.css';
 import RadialChart from '../components/RadialChart';
 import { add, reload, close } from 'ionicons/icons';
 import { AddJawlah } from '../components/AddJawlah';
-import { useIndexedDB } from 'react-indexed-db';
+
+
+
 const Tab2: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   
-  // const { getByID } = useIndexedDB('jawlat');
-  const { getAll } = useIndexedDB('jawlat');
-  const [persons, setPersons] = useState();  
-  useEffect(() => {
-    getAll().then(personsFromDB => {
-      setPersons(personsFromDB);
-    });
-  }, []);
+
 
   return (
     <IonPage>
@@ -85,18 +80,15 @@ const Tab2: React.FC = () => {
             </IonCol>
             <IonCol>
               <IonCard className="tasjilah">
-                {/* <IonCol className="ion-align-self-center"><h2> التسجيلة</h2></IonCol>
-                <IonCol><h2 className="remove-whitespace">0</h2></IonCol> */}
+                <IonCol className="ion-align-self-center"><h2> التسجيلة</h2></IonCol>
+                <IonCol><h2 className="remove-whitespace">0</h2></IonCol>
                
-                    <div>
-                      {personsFromDB.map(person => (
-                        <span>{person}</span>
-                      ))}
-                    </div>
+      
                             
               </IonCard>
             </IonCol>
           </IonRow>
+        
         </IonGrid>
       </IonContent>
     </IonPage >
