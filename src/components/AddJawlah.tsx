@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { IonButton, IonCol, IonContent, IonGrid, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonRadio, IonRadioGroup, IonRow, IonSegment, IonSegmentButton, IonSelect, IonSelectOption } from '@ionic/react';
 import "./AddJawlah.css"
+// import useLocalStorage from 'react-hook-uselocalstorage';
+// import { useIdb } from 'react-use-idb'
+import { openDB, deleteDB, wrap, unwrap } from 'idb';
+
 
 
 
@@ -10,10 +14,8 @@ export const AddJawlah: React.FC = () => {
     const [finalWinType, setfinalWinType] = useState<string>('')
     const [nazilCount, setNazilCount] = useState<number>(0)
     const [nazilTotal, setNazilTotal] = useState<number>(0)
-   
-    const [jawlah, setJawlah] = useState();
 
-
+    
 
     function switchWin() {
       switch(generalWinType){
@@ -94,8 +96,6 @@ export const AddJawlah: React.FC = () => {
       {'jawlahID':0,'winType':'tasjilahdabal','winnerTeam':'','losserTeam':'','winnerValue':0,'losserValue':600,'nazilCount':0,'nazilTotal':0,'isTasjilah':true}
     ]
     
-    
-    
     const NazilValues = [
       {'nazil':1,'subTotal':200},
       {'nazil':2,'subTotal':100},
@@ -116,9 +116,9 @@ export const AddJawlah: React.FC = () => {
             } 
             
             return Number(losserVal) 
-          }
+    }
           
-    function setWinValues(){
+    async function setWinValues(){
       const jawalhInfo = winValues.filter(value => value.winType === finalWinType);
         jawalhInfo[0].winnerTeam = (winTeam === 'lana')? 'lana':'lahom';
         jawalhInfo[0].losserTeam = (winTeam === 'lana')? 'lahom':'lana';
@@ -128,22 +128,28 @@ export const AddJawlah: React.FC = () => {
           let finalVal = totalCalc()
           jawalhInfo[0].losserValue = finalVal              
         }
-
-        console.log(jawalhInfo)
-
-      //   add({'jawlahID':0,'winType':jawalhInfo[0].winType,'winnerTeam':jawalhInfo[0].winnerTeam,
-      //   'losserTeam':jawalhInfo[0].losserTeam,'winnerValue':jawalhInfo[0].winnerValue,'losserValue':jawalhInfo[0].losserValue,
-      //   'nazilCount':jawalhInfo[0].nazilCount,'nazilTotal':jawalhInfo[0].nazilTotal,'isTasjilah':jawalhInfo[0].isTasjilah
-      // }).then(
-      //   error => {
-      //     console.log(error)
-      //   }
-      // )
+        
       
-            
-  }
+      openDB('jawlatDB',1, {
+        upgrade(db){
+          db.createObjectStore('jawlat', { keyPath: 'id',autoIncrement: true})
+        }
+      })
 
-  
+
+      const db1 = await openDB('jawlatDB',1);
+      db1.add('jawlat',jawalhInfo[0]);
+      let values = await db1.getAll('jawlat')
+
+
+      console.log(values);
+      
+      
+      db1.close();
+      
+
+    }
+
    
     return (
         <IonContent className="addjawalhview">
