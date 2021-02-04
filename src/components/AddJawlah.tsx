@@ -137,15 +137,19 @@ export const AddJawlah: React.FC = () => {
       })
 
 
-      const db1 = await openDB('jawlatDB',1);
-      db1.add('jawlat',jawalhInfo[0]);
-      let values = await db1.getAll('jawlat')
+      const mainDB = await openDB('jawlatDB',1);
+      let currentCount = await mainDB.count('jawlat');
 
 
-      console.log(values);
-      
-      
-      db1.close();
+      //get all jawalts that are not Tasjilah
+      let getAll = await mainDB.getAll('jawlat')
+      var filteredArray = getAll.filter( obj => obj.isTasjilah === false )
+      .map( obj => obj );
+    
+    console.log( filteredArray );
+      // jawalhInfo[0].jawlahID = (currentCount + 1) 
+      // mainDB.add('jawlat',jawalhInfo[0]);
+      mainDB.close();
       
 
     }
